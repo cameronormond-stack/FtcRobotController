@@ -1,18 +1,16 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
-@TeleOp
-public class RobotArmTest extends OpMode {
+public class RobotArmTest {
 
     private DcMotor extender;
     private DcMotor rotater;
 
-    public void init() {
-        extender = hardwareMap.get(DcMotor.class, "Extender");
-        rotater = hardwareMap.get(DcMotor.class, "Rotater");
+    public void init(HardwareMap hwMap) {
+        extender = hwMap.get(DcMotor.class, "Extender");
+        rotater = hwMap.get(DcMotor.class, "Rotater");
         extender.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rotater.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
@@ -26,7 +24,6 @@ public class RobotArmTest extends OpMode {
         rotater.setPower(RSpeed);
     }
 
-    @Override
     public void loop() {
 
     }
