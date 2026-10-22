@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+@TeleOp
 public class Biobuzz1 extends OpMode {
 
     // Set up a variable for each drive wheel to save power level for telemetry.
@@ -18,53 +20,41 @@ public class Biobuzz1 extends OpMode {
     double intakePower;
 
     // Motors
-    DcMotor frontRightMotor;
-    DcMotor backRightMotor;
-    DcMotor frontLeftMotor;
-    DcMotor backLeftMotor;
+    DcMotor frontRight;
+    DcMotor backRight;
+    DcMotor frontLeft;
+    DcMotor backLeft;
     DcMotor intake;
-    CRServo frontRightServo;
-    CRServo frontLeftServo;
+    CRServo intakeRight;
+    CRServo intakeLeft;
 
     @Override
     public void init() {
 
         // Match motors to motor names in config
-        frontLeftMotor = hardwareMap.get(DcMotor.class, "Front Left Motor");
-        frontRightMotor = hardwareMap.get(DcMotor.class, "Front Right Motor");
-        backLeftMotor = hardwareMap.get(DcMotor.class, "Back Left Motor");
-        backRightMotor = hardwareMap.get(DcMotor.class, "Back Right Motor");
-        intake = hardwareMap.get(DcMotorEx.class, "intake");
+        frontLeft = hardwareMap.get(DcMotor.class, "Front Left");
+        frontRight = hardwareMap.get(DcMotor.class, "Front Right");
+        backLeft = hardwareMap.get(DcMotor.class, "Back Left");
+        backRight = hardwareMap.get(DcMotor.class, "Back Right");
+        //intake = hardwareMap.get(DcMotorEx.class, "Intake");
 
         // Reverse FL and BR motors for proper mecanum drive
-        frontLeftMotor.setDirection(DcMotor.Direction.REVERSE);
-        backRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-
-        // Match servos to servo names in config
-        frontRightServo = hardwareMap.get(CRServo.class, "Front Right Servo");
-        frontLeftServo = hardwareMap.get(CRServo.class, "Front Left Servo");
-
-        frontLeftServo.setPower(0);
-        frontRightServo.setPower(0);
-        frontRightServo.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        backRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        //intake.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     @Override
     public void loop() {
-
         // Set intake speeds
-        frontLeftServo.setPower(1);
-        frontRightServo.setPower(1);
-        intake.setPower(1);
+        //intake.setPower(1);
 
         // Gather inputs
         mecanumDrive(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
-
     }
 
     void mecanumDrive(double forward, double strafe, double rotate) {
-
-        // Maintains correct proportions of power to motors if one would exceed -1,1
+        // Maintains correct proportions of power to motors if one would exceed -1, 1
         double denominator = Math.max(Math.abs(forward) + Math.abs(strafe) + Math.abs(rotate), 1);
 
         // Mecanum math
@@ -74,9 +64,9 @@ public class Biobuzz1 extends OpMode {
         rightBackPower = (forward + strafe - rotate) / denominator;
 
         // Apply motor powers
-        frontLeftMotor.setPower(leftFrontPower);
-        frontRightMotor.setPower(rightFrontPower);
-        backLeftMotor.setPower(leftBackPower);
-        backRightMotor.setPower(rightBackPower);
+        frontLeft.setPower(leftFrontPower);
+        frontRight.setPower(rightFrontPower);
+        backLeft.setPower(leftBackPower);
+        backRight.setPower(rightBackPower);
     }
 }
