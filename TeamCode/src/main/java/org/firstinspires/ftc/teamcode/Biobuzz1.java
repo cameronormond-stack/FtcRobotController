@@ -26,10 +26,6 @@ public class Biobuzz1 extends OpMode {
 
     @Override
     public void init() {
-        frontLeft = hardwareMap.get(DcMotorEx.class, "Front Left");
-        frontRight = hardwareMap.get(DcMotorEx.class, "Front Right");
-        backLeft = hardwareMap.get(DcMotorEx.class, "Back Left");
-        backRight = hardwareMap.get(DcMotorEx.class, "Back Right");
     }
 
     @Override
